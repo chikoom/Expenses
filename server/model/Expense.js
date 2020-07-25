@@ -7,7 +7,6 @@ const expenseSchema = new Schema({
   date: Date,
   group:String
 })
-
 const Expense = mongoose.model('Expense', expenseSchema)
 
 module.exports = Expense

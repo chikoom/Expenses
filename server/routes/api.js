@@ -31,14 +31,12 @@ router.post('/new', dateFormatter, async (req, res)=>{
       const data = await newExpense.save()
       console.log(`I spent ${data.amount} on ${data.group}`)
       res.send(data)
-
     } catch (err) {
       console.error(err)
       res.status(500)
       res.send('DATABASE UPDATE ERROR')
     }
 })
-
 
 router.put('/update', (req,res)=>{
   const groupFrom = req.body.group1
@@ -50,7 +48,6 @@ router.put('/update', (req,res)=>{
 
 router.get('/expenses/:group', (req,res)=>{
   const group = req.params.group
-  
   const total = req.query.total
   if(total){
     Expense.aggregate([
@@ -93,14 +90,11 @@ router.get('/expenses',dateFormatter, (req,res)=>{
     ]).exec(function(err, data){
       res.send(data)
     })
-
-
   } else {
     Expense.find(filterQuery).sort({date: -1}).exec(function(err, data){
       res.send(data)
     })
   }
-  
 })
 
 router.get('/expenses/user/:userId',dateFormatter, (req,res)=>{

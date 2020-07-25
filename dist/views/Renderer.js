@@ -13,7 +13,6 @@ export class Renderer{
     this.turnToAccordion($('#expenses-groups'))
   }
   renderAdd(data){
-    console.log(data)
     const addTemplate = Handlebars.compile($(`#add-template`).html())
     const addHTML = addTemplate({ data })
     $('#add').append(addHTML)

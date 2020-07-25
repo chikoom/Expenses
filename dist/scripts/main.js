@@ -24,19 +24,14 @@ $('.submit-range').on('click', function(event){
 
 $('#add').on('submit', '#add-form', function(event){
   event.preventDefault()
-
   const dataToSend = {
     name:$('#add-name').val(),
     amount:$('#add-amount').val(),
     date:$('#add-date').val(),
     group:$('#add-category').val()
   }
-
   try {
-    
     apiManager.validator(dataToSend)
-    console.log("NO VALIDATION ERROR")
-
     apiManager.addExpence(dataToSend).then(function(data){
       return apiManager.getAllExpensesByGroup()
     }).then(function(data){
@@ -45,12 +40,10 @@ $('#add').on('submit', '#add-form', function(event){
       console.error(err)
       renderer.renderError(err)
     })
-
   } catch (err) {
     console.error(err)
     renderer.renderError(err)
   }
-  
 })
 
 $('body').on('click', '.error-msg', function(){
