@@ -6,13 +6,12 @@ const path = require('path')
 
 const PORT = 3333
 const app = express()
-mongoose.connect("mongodb://localhost/expenses")
+mongoose.connect("mongodb://localhost/expenses", { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.use(express.static(path.join(__dirname, 'dist')))
 app.use(express.static(path.join(__dirname, 'node_modules')))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:true}))
-
+app.use(bodyParser.urlencoded({extended:false}))
 
 app.use('/',router)
 

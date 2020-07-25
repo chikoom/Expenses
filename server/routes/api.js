@@ -19,21 +19,24 @@ router.get('/sanity', (req,res)=>{
   res.send('OK')
 })
 
-router.post('/new', dateFormatter, (req, res)=>{
-  const newExpense = new Expense({
-    name:req.body.name,
-    amount:Number(req.body.amount),
-    date:req.body.date,
-    group:req.body.group
-  })
-  const savePromise = newExpense.save()
-  savePromise.then(data => {
-    console.log(`I spent ${data.amount} on ${data.group}`)
-  }).catch(err => {
-    console.log(err)
-  }).finally(data => {
-    res.send('COMPLETED')
-  })
+router.post('/new', dateFormatter, async (req, res)=>{ 
+    let newExpense = {}
+    try {
+      newExpense = new Expense({
+        name:req.body.name,
+        amount:Number(req.body.amount),
+        date:req.body.date,
+        group:req.body.group
+      })
+      const data = await newExpense.save()
+      console.log(`I spent ${data.amount} on ${data.group}`)
+      res.send(data)
+
+    } catch (err) {
+      console.error(err)
+      res.status(500)
+      res.send('DATABASE UPDATE ERROR')
+    }
 })
 
 
@@ -41,13 +44,13 @@ router.put('/update', (req,res)=>{
   const groupFrom = req.body.group1
   const groupTo = req.body.group2
   Expense.findOneAndUpdate({group:groupFrom},{group:groupTo},{new:true}).exec(function(err,data){
-    console.log(data)
     res.send({name:data.name, newGroup:data.group})
   })
 })
 
 router.get('/expenses/:group', (req,res)=>{
   const group = req.params.group
+  
   const total = req.query.total
   if(total){
     Expense.aggregate([
@@ -62,19 +65,42 @@ router.get('/expenses/:group', (req,res)=>{
     })
   }
 })
-
+ 
 router.get('/expenses',dateFormatter, (req,res)=>{
-  console.log(req.query.d1)
-  console.log(req.query.d2)
+  const grouping = req.query.grouping
   const firstDate = req.query.d1
   let filterQuery = {}
   if(firstDate){
     const secondDate = req.query.d2 || new Date()
-    filterQuery = { date: { $gte: firstDate, $lte: secondDate}}
+    filterQuery = { "date": { $gte: new Date(firstDate), $lte: new Date(secondDate)}}
   }
-  Expense.find(filterQuery).sort({date: -1}).exec(function(err, data){
-    res.send(data)
-  })
+  if(grouping){ 
+    Expense.aggregate([
+      {"$match": filterQuery},
+      { 
+        "$group": { 
+          "_id": "$group",
+          "total": {"$sum":"$amount"},
+          "expenses": {
+            "$push":{
+              "name":"$name",
+              "amount":"$amount",
+              "date":"$date"
+            }
+          }
+        } 
+      }
+    ]).exec(function(err, data){
+      res.send(data)
+    })
+
+
+  } else {
+    Expense.find(filterQuery).sort({date: -1}).exec(function(err, data){
+      res.send(data)
+    })
+  }
+  
 })
 
 router.get('/expenses/user/:userId',dateFormatter, (req,res)=>{
@@ -85,7 +111,6 @@ router.get('/expenses/user/:userId',dateFormatter, (req,res)=>{
     const secondDate = req.query.d2 || new Date()
     filterQuery.match = { date: {$gte: firstDate, $lte: secondDate}}
   }
-  console.log(filterQuery)
   User.findById(userId).populate(filterQuery).exec(function(err, data){
     res.send(data)
   })
@@ -105,9 +130,21 @@ router.get('/users/:id', (req,res) => {
 })
 
 router.get('/categories', (req,res) => {
-  Category.find({}).exec(function(err, data){
+  Expense.aggregate([
+    { 
+      "$group": { 
+        "_id": "$group"
+      } 
+    }
+  ]).exec(function(err, data){
     res.send(data)
   })
+})
+
+/** Handling 404 */
+router.use(function(req, res, next) {
+  res.status(404);
+  res.redirect('404.html');
 })
 
 module.exports = router

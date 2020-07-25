@@ -4,8 +4,8 @@
   "description": "Expense Tracker",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
+    
   },
   "repository": {
     "type": "git",
@@ -19,9 +19,14 @@
   "homepage": "https://github.com/chikoom/Expenses#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "chart.js": "^2.9.3",
+    "chokidar": "^3.4.1",
     "express": "^4.17.1",
     "handlebars": "^4.7.6",
     "jquery": "^3.5.1",
+    "jquery-ui": "^1.12.1",
+    "jquery-ui-dist": "^1.12.1",
+    "jquery-ui-themes": "^1.12.0",
     "moment": "^2.27.0",
     "mongoose": "^5.9.24",
     "mongoose-timezone": "^1.3.0"

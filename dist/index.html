@@ -4,23 +4,92 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MONEYx3</title>
-  <link rel="stylesheet" href="style/style.css">
+  <link rel="stylesheet" href="./styles/style.css">
+  <link rel="stylesheet" href="./jquery-ui-themes/themes/redmond/jquery-ui.css">
+  <link rel="stylesheet" href="./jquery-ui-themes/themes/redmond/theme.css">
 </head>
 <body>
 
   <div id="root-container">
-    
+    <header>
+      <div id="logo-container">
+        <img id="logo" src="./assets/wallet.png">
+        <h1>MoneyX3</h1>
+        <h2>Simple Expense Tracker</h2>
+      </div>
+      <nav>
+        <div class="date-pickers">
+          <form>
+            <label class="date-pickers-title">Select Date Range:</label>
+            <input type="text" class="date-pickers select-from-date" placeholder="from">
+            <input type="text" class="date-pickers select-to-date" placeholder="to">
+            <input class="submit-range ui-button ui-widget ui-corner-all" type="submit" value="Filter">
+          </form>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section id="graphics">
+      </section>
+      <section id="details">
+
+      </section>
+      <section id="groups">
+        
+      </section>
+      <section id="add">
+      
+      </section>
+    </main>
   </div>
 
-  
-  <script id="results-template" type="text/x-handlebars-template">
+
+
+  <script id="groups-template" type="text/x-handlebars-template">
+      <div id="expenses-groups">
+        {{#each data}}
+          <h4 class="expense-group-header"><span class="expense-group-header-name">{{#capitalize}}{{_id}}{{/capitalize}}</span> <span class="expense-group-header-total">Total Spent: </span><span class="expense-group-header-sum">{{total}}</span></h3>
+          <div>
+            {{#each expenses}}
+              <div class="expense-group-row">
+                <span>{{#dateFormater}}{{date}}{{/dateFormater}}</span> <span>{{name}}</span> <span>{{amount}}</span>
+              </div>
+            {{/each}}
+          </div>
+        {{/each}}
+      </div>
+    </div>
+    
   </script>
 
   <script id="add-template" type="text/x-handlebars-template">
+    <div id="add-container">
+      <h3>Add a new expense</h2>
+      <form action="/categories" id="add-form">
+        <label for="add-name">The Expense:</label>
+        <input type="text" id="add-name" name="add-name">
+
+        <label for="add-amount">The Price:</label>
+        <input type="number" id="add-amount" name="add-amount">
+
+        <label for="add-date">The Date:</label>
+        <input type="text" id="add-date" name="add-date">
+
+        <label for="add-category">The Category:</label>
+        <select id="add-category" name="add-category">
+          {{#each data}}
+          <option>{{_id}}</option>
+          {{/each}}
+        </select>
+        <input id="submit-expense" class="ui-button ui-widget ui-corner-all" type="submit" value="Add">
+      </form>
+    </div>
   </script>
 
   <script src="./handlebars/dist/handlebars.min.js"></script>
   <script src="./jquery/dist/jquery.min.js"></script>
-  <script src="./controller/main.js" type="module"></script>
+  <script src="./jquery-ui-dist/jquery-ui.min.js"></script>
+  <script src="./chart.js/dist/Chart.min.js"></script>
+  <script src="./scripts/main.js" type="module"></script>
 </body>
-</html>
+</html> 
