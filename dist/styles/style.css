@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Kodchasan:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+:root {
+  --text-color:#1a1a1a;
+  --bright-color:#fff;
+  --lightest-color: #C2D3CD;
+  --light-color:#AFBFC0;
+  --medium-color:#9FA4A9;
+  --dark-color:#847E89;
+  --darkest-color:#56494C;
+}
+*{
+  
+}
+body{
+  font-family: 'Kodchasan', sans-serif;
+  background-color: var(--bright-color);
+  margin: 0;
+  padding: 0;
+}
+#root-container{
+    max-width:1200px;
+    margin: 0 auto;
+}
+h1{
+font-size:2em;
+}
+h2{
+font-size:1em;
+}
+h3{
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    font-size: 20px;
+    border-bottom: 2px solid var(--lightest-color)
+}
+header{
+    border-bottom:2px solid #333;
+}
+#logo-container{
+  margin: 30px auto 0 auto;
+  width:280px;
+  display: grid;
+  grid-template-areas: 
+  "logo name"
+  "logo slogan";
+}
+#logo{
+  grid-area: logo;
+  width: 70px;
+}
+#logo-container h1{
+  grid-area: name;
+  font-size: 38px;
+  margin: 0;
+}
+#logo-container h2{
+  grid-area: slogan;
+  margin: 0;
+  font-size: 16px;
+}
+nav{
+
+}
+.date-pickers{
+    width: 300px;
+    position: relative;
+    display: block;
+    padding-left: 20px;
+}
+.date-pickers-title{
+display: block;
+}
+.select-to-date{
+    display: inline-block;
+    width:50px;
+    margin-bottom:10px;
+}
+.select-from-date{
+    display: inline-block;
+    width:50px;
+    margin-bottom: 10px;
+}
+
+.date-pickers form{
+    position: relative;
+    width:100%;
+}
+.submit-range{
+    display: inline-block;
+    width:100px;
+    margin-bottom: 10px;
+}
+main{
+
+}
+#graphics{
+
+}
+#details{
+
+}
+main{
+  display: grid;
+  grid-template-columns: 6fr 6fr;
+  grid-gap: 30px;
+  padding: 50px;
+}
+
+#groups{
+  max-width: 600px;
+}
+#groups h2{
+  
+}
+#expenses-groups{
+    margin-top:30px;
+}
+.expense-group-header{
+  display: grid !important;
+  grid-template-columns: 1fr 3fr 4fr 4fr;
+}
+.expense-group-row{
+  display: grid;
+  grid-template-columns: 4fr 4fr 4fr;
+}
+#add{
+  max-width: 600px;
+}
+#add-container{
+    margin: 0 auto;
+}
+#add-form{
+    display: block;
+    margin: 0 auto;
+    width:300px;
+}
+label{
+    
+}
+input, button, #submit-expense, #add-category-button{
+  display: block;
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: left;
+}
+#submit-expense{
+  margin-top: 20px;
+    width:100px;
+} 
+
+.error-msg{
+  width: 100vw;
+    height: 100vh;
+    background-color: rgba(255,255,255,0.9);
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    font-size: 25px;
+    font-weight: 900;
+}
